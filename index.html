@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hotel Jam Saku - Reservasi Kamar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Arima:wght@400;600&family=Fraunces:opsz,wght@9..144,800;9..144,900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <a href="#atas" class="logo">Hotel 13.12</a>
+    <nav>
+      <a href="#kamar">Kamar</a>
+      <a href="#unduh">Unduh Aplikasi</a>
+      <a href="#ulasan">Ulasan</a>
+      <a href="#riwayat">Reservasi Saya</a>
+      <a href="#admin" id="navAdmin" hidden>Panel Admin</a>
+      <button class="tombol kecil" id="btnAuth">Masuk</button>
+    </nav>
+  </header>
+
+  <main id="atas">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="kertas hero-kertas">
+        <h1>Tempat Keanggunan.<br>Bertemu Kenyamanan.</h1>
+        <p>Pilih tanggal, pilih kamar, bayar online. Bukti reservasi langsung muncul.</p>
+        <a href="#kamar" class="tombol">Lihat kamar</a>
+      </div>
+      <div class="jam" aria-hidden="true"><span></span><span></span></div>
+      <span class="bintang b1" aria-hidden="true"></span>
+      <span class="bintang b2" aria-hidden="true"></span>
+    </section>
+
+    <!-- KAMAR + FILTER -->
+    <section id="kamar" class="bagian">
+      <div class="kertas">
+        <h2>Kamar tersedia</h2>
+        <form class="filter" id="filter">
+          <label>Check-in <input type="date" id="fMasuk"></label>
+          <label>Check-out <input type="date" id="fKeluar"></label>
+          <label>Tipe
+            <select id="fTipe">
+              <option value="">Semua</option>
+              <option>Standard</option>
+              <option>Deluxe</option>
+              <option>Suite</option>
+            </select>
+          </label>
+          <label>Harga maks / malam
+            <select id="fHarga">
+              <option value="0">Berapa saja</option>
+              <option value="400000">Rp 400.000</option>
+              <option value="700000">Rp 700.000</option>
+              <option value="1000000">Rp 1.000.000</option>
+            </select>
+          </label>
+        </form>
+        <p id="info" class="info"></p>
+        <div id="daftarKamar" class="grid"></div>
+      </div>
+    </section>
+
+    <!-- UNDUH APLIKASI -->
+    <section id="unduh" class="bagian">
+      <div class="kertas">
+        <h2>Unduh aplikasi</h2>
+        <p class="pengantar">Pesan kamar lebih cepat dari perangkat Anda.</p>
+        <div class="grid unduh">
+          <article class="app android">
+            <h3>Android</h3>
+            <p>Untuk HP dan tablet Android 8.0 ke atas.</p>
+            <a class="tombol" href="unduhan/hotel-jam-saku.apk" download>Unduh APK</a>
+          </article>
+          <article class="app windows">
+            <h3>Windows</h3>
+            <p>Untuk laptop dan PC Windows 10 atau 11.</p>
+            <a class="tombol" href="unduhan/hotel-jam-saku-setup.exe" download>Unduh untuk Windows</a>
+          </article>
+          <article class="app lain">
+            <h3>Perangkat lain</h3>
+            <p>iPhone, iPad, Mac, dan Linux: buka situs ini di browser. Di iPhone, pilih <b>Bagikan</b> lalu <b>Tambah ke Layar Utama</b>.</p>
+            <a class="tombol" href="#atas">Buka versi web</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ULASAN & KELUHAN -->
+    <section id="ulasan" class="bagian">
+      <div class="kertas">
+        <h2>Ulasan dan keluhan</h2>
+        <p id="ringkasUlasan" class="pengantar"></p>
+        <p id="catatUlasan" class="info"></p>
+
+        <form id="formUlasan" class="form-ulasan" hidden>
+          <div class="dua">
+            <label>Jenis
+              <select id="uJenis">
+                <option>Komentar</option>
+                <option>Keluhan</option>
+                <option>Saran</option>
+              </select>
+            </label>
+            <label>Penilaian
+              <select id="uNilai">
+                <option value="5">5 - Sangat baik</option>
+                <option value="4">4 - Baik</option>
+                <option value="3">3 - Cukup</option>
+                <option value="2">2 - Kurang</option>
+                <option value="1">1 - Buruk</option>
+              </select>
+            </label>
+          </div>
+          <label>Pesan Anda
+            <textarea id="uPesan" rows="4" maxlength="500" required placeholder="Ceritakan pengalaman Anda..."></textarea>
+          </label>
+          <p id="ulasanError" class="error" role="alert"></p>
+          <button type="submit" class="tombol">Kirim</button>
+        </form>
+
+        <div id="daftarUlasan"></div>
+      </div>
+    </section>
+
+    <!-- RESERVASI SAYA -->
+    <section id="riwayat" class="bagian">
+      <div class="kertas">
+        <h2>Reservasi saya</h2>
+        <div id="daftarRiwayat"></div>
+      </div>
+    </section>
+
+    <!-- PANEL ADMIN (hanya tampil untuk admin) -->
+    <section id="admin" class="bagian" hidden>
+      <div class="kertas">
+        <h2>Panel admin</h2>
+        <div class="statistik" id="statistik"></div>
+        <h3>Kelola kamar</h3>
+        <form class="filter" id="formKamar">
+          <label>No. kamar <input type="text" id="kNo" required></label>
+          <label>Tipe
+            <select id="kTipe"><option>Standard</option><option>Deluxe</option><option>Suite</option></select>
+          </label>
+          <label>Harga / malam <input type="number" id="kHarga" min="100000" step="10000" required></label>
+          <button type="submit" class="tombol">Tambah kamar</button>
+        </form>
+        <div class="tabel-scroll" id="adminKamar"></div>
+        <h3>Semua reservasi</h3>
+        <div class="tabel-scroll" id="adminReservasi"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>Hotel Jam Saku &middot; Proyek belajar web</footer>
+
+  <!-- POPUP PEMESANAN -->
+  <dialog id="popup">
+    <button class="tutup" id="tutup" aria-label="Tutup">&times;</button>
+
+    <div id="isiForm">
+      <h3 id="judulKamar"></h3>
+      <form id="formPesan">
+        <p id="dataPelanggan" class="pelanggan"></p>
+        <div class="dua">
+          <label>Check-in <input type="date" id="masuk" required></label>
+          <label>Check-out <input type="date" id="keluar" required></label>
+        </div>
+        <label>Metode bayar
+          <select id="metode">
+            <option>Transfer Bank</option>
+            <option>QRIS</option>
+            <option>Kartu Kredit</option>
+          </select>
+        </label>
+        <p id="pesanError" class="error" role="alert"></p>
+        <p class="total">Total: <strong id="total">Rp 0</strong></p>
+        <button type="submit" class="tombol">Bayar sekarang</button>
+      </form>
+    </div>
+
+    <div id="isiBukti" hidden>
+      <h3>Bukti reservasi</h3>
+      <div id="bukti" class="bukti"></div>
+      <button class="tombol" id="cetak">Cetak bukti</button>
+      <button class="tombol" id="selesai">Selesai</button>
+    </div>
+  </dialog>
+
+  <!-- POPUP MASUK / DAFTAR -->
+  <dialog id="authPopup">
+    <button class="tutup" id="tutupAuth" aria-label="Tutup">&times;</button>
+    <h3 id="judulAuth">Masuk</h3>
+    <form id="formAuth">
+      <div id="kolomDaftar" class="kolom" hidden>
+        <label>Nama lengkap <input type="text" id="aNama"></label>
+        <label>Alamat <input type="text" id="aAlamat"></label>
+        <label>No. HP <input type="tel" id="aHp"></label>
+      </div>
+      <label>Email <input type="email" id="aEmail" required placeholder="nama@email.com" autocomplete="email"></label>
+      <label>Password <input type="password" id="aPass" required minlength="4"></label>
+      <label class="cek"><input type="checkbox" id="lihatPass"> Tampilkan password</label>
+      <p id="authError" class="error" role="alert"></p>
+      <button type="submit" class="tombol" id="btnSubmitAuth">Masuk</button>
+      <button type="button" class="link" id="gantiMode">Belum punya akun? Daftar</button>
+    </form>
+  </dialog>
+
+  <!-- Urutan penting: data dulu, main paling akhir -->
+  <script src="data.js"></script>
+  <script src="bantu.js"></script>
+  <script src="auth.js"></script>
+  <script src="kamar.js"></script>
+  <script src="pemesanan.js"></script>
+  <script src="reservasi.js"></script>
+  <script src="admin.js"></script>
+  <script src="ulasan.js"></script>
+  <script src="main.js"></script>
+
+  <!-- Peringatan jika folder js/ tidak ditemukan -->
+  <script>
+    if (typeof segarkan !== "function") {
+      document.body.insertAdjacentHTML("afterbegin",
+        '<div style="background:#b8412f;color:#fff;padding:1rem 5%;font-weight:600;position:relative;z-index:20">' +
+        'Halaman belum berfungsi: file JavaScript tidak ditemukan. ' +
+        'Pastikan folder <code>js</code> (berisi data.js, main.js, dll) berada di samping index.html.</div>');
+    }
+  </script>
+</body>
+</html>
